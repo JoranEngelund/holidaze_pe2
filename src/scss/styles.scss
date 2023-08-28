@@ -1,0 +1,40 @@
+@import "../../node_modules/bootstrap/scss/functions";
+
+// Original Bootstrap scss files
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Open+Sans&display=swap");
+
+body,
+html,
+#root {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: "Open Sans", sans-serif;
+}
+
+h1,
+h2,
+li,
+a,
+header,
+nav {
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.menuIcon {
+  border: none !important;
+}
+
+.navbar-toggler {
+  color: black !important;
+}
+
+.nav-link:hover {
+  background-color: #f7f7f7;
+}
+
+.nav {
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+}
