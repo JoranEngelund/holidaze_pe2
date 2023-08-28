@@ -7,11 +7,13 @@ import * as s from "./styled";
  * @returns {JSX.Element} The JSX element representing the Logo component.
  */
 const Logo = () => {
+  const redirectToIndex = () => {
+    window.location.href = "/";
+  };
+
   return (
     <s.StyledLogo
-      onClick={() => {
-        window.replace("");
-      }}
+      onClick={redirectToIndex}
       src="/assets/logo/logo_alt2.png"
       alt="logo for Holidaze"
       title="Home"
