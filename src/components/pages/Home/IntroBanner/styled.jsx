@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Banner = styled.section`
   background: fixed 100% 26%
-    url(/assets/images/pexels-jess-loiterton-4321802.jpg);
+    url("../../../../assets/images/pexels-jess-loiterton-4321802.jpg");
   min-height: 18rem;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,6 @@ export const Banner = styled.section`
   justify-content: center;
   align-items: center;
   background-size: cover;
-  background-attachment: scroll;
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
 `;
 

@@ -1,7 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
+import "../dist/css/styles.css";
 import Layout from "./components/Layout";
 import Home from "./components/pages/Home";
+import Venue from "./components/pages/Venue";
 
 const App = () => {
   return (
@@ -9,7 +11,7 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="*" element={<h1>Page not found</h1>} />
-        <Route path="/venue/:id" element />
+        <Route path="/venue/:id" element={<Venue />} />
         <Route path="/profile/:name" element />
         <Route path="/profile/:name/reservations" element />
         <Route path="/profile/venue-manager-settings" element />

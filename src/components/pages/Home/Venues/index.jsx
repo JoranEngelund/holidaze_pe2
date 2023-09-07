@@ -1,7 +1,7 @@
 import useApi from "../../../../hooks/useApi";
 import { venueImagePlaceholder } from "../../../../placeholders/imageplaceholders";
 import * as s from "./styled";
-import { AllVenues_URL } from "../../../../constants";
+import { allVenues_URL } from "../../../../constants";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStar,
@@ -19,14 +19,12 @@ import {
  * @returns {JSX.Element} The JSX element representing the AllVenues component.
  */
 const AllVenues = () => {
-  const { data, isLoading, isError } = useApi(AllVenues_URL);
-  console.log(data);
-  console.log(venueImagePlaceholder);
+  const { data, isLoading, isError } = useApi(allVenues_URL);
 
   return (
     <s.VenuesContainer>
       <s.VenueHeading>Ready to Explore?</s.VenueHeading>
-      {data.map((listing) => (
+      {data?.map((listing) => (
         <s.Card to={`/venue/${listing.id}`} key={listing.id} id={listing.id}>
           {listing.media.length <= 0 ? (
             <s.VenueImage
