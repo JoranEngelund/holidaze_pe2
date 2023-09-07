@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const Banner = styled.section`
   background: fixed 100% 26%
-    url("../../../../assets/images/pexels-jess-loiterton-4321802.jpg");
+    url("./../../../../assets/images/pexels-jess-loiterton-4321802.jpg");
   min-height: 18rem;
   display: flex;
   flex-direction: column;
