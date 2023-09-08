@@ -9,6 +9,7 @@ import checkToken from "../../../../auth";
 import { useParams } from "react-router-dom";
 import useSendForm from "../../../../hooks/useSendForm";
 import { BOOKING_URL } from "../../../../constants";
+import "react-datepicker/dist/react-datepicker.css";
 
 /**
  * Booking Component

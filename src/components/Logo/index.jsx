@@ -1,4 +1,5 @@
 import * as s from "./styled";
+import logoImage from "../../assets/logo/logo_alt2.png";
 
 /**
  * A component that displays the logo for the Holidaze application.
@@ -14,7 +15,7 @@ const Logo = () => {
   return (
     <s.StyledLogo
       onClick={redirectToIndex}
-      src="./assets/logo/logo_alt2.png"
+      src={logoImage}
       alt="logo for Holidaze"
       title="Home"
     />
