@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
+import heroBanner from "../../../../assets/images/pexels-jess-loiterton-4321802.jpg";
 
 export const Banner = styled.section`
-  background: fixed 100% 26%
-    url("./../../../../assets/images/pexels-jess-loiterton-4321802.jpg");
+  background: fixed 100% 26% url(${heroBanner});
   min-height: 18rem;
   display: flex;
   flex-direction: column;

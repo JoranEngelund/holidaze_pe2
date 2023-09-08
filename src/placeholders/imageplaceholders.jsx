@@ -1,2 +1,5 @@
-export const venueImagePlaceholder = "./../assets/images/placeholder-photo.jpg";
-export const avatarPlaceholder = "./../assets/images/profile-image.png";
+import avatarHolder from "../assets/images/profile-image.png";
+import venuePlaceholder from "../assets/images/placeholder-photo.jpg";
+
+export const venueImagePlaceholder = `${venuePlaceholder}`;
+export const avatarPlaceholder = `${avatarHolder}`;
