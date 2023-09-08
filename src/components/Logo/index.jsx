@@ -14,7 +14,7 @@ const Logo = () => {
   return (
     <s.StyledLogo
       onClick={redirectToIndex}
-      src="/assets/logo/logo_alt2.png"
+      src="./assets/logo/logo_alt2.png"
       alt="logo for Holidaze"
       title="Home"
     />
