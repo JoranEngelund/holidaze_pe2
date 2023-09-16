@@ -43,7 +43,7 @@ const Media = () => {
           ))}
         </Carousel>
       ) : (
-        <img src={venueImagePlaceholder} />
+        <s.CarouselMedia src={venueImagePlaceholder} />
       )}
     </div>
   );

@@ -12,27 +12,21 @@ import { BOOKING_URL } from "../../../../constants";
 import "react-datepicker/dist/react-datepicker.css";
 
 /**
- * Booking Component
- *
- * This component represents the booking page where users can reserve a venue.
- * It allows users to select check-in and check-out dates, the number of guests,
- * and make a reservation.
+ * Booking component for displaying and handling booking details.
  *
  * @component
- * @example
- * // Example usage of Booking component
- * <Booking />
- *
- * @returns {JSX.Element} The JSX element representing the Booking component.
+ * @param {Object} props - The component's properties.
+ * @param {Function} props.handleShow - A function to handle showing the login modal.
+ * @returns {JSX.Element} The JSX element representing the booking details.
  */
-const Booking = () => {
+const Booking = ({ handleShow }) => {
   let { id } = useParams();
   const { data } = useSetup();
   const { price, rating, maxGuests, bookings } = data;
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
 
-  checkToken();
+  const { token } = checkToken();
   const weekend = (date) => new Date() < date;
   const guestOptions = Array.from(
     { length: maxGuests },
@@ -81,7 +75,7 @@ const Booking = () => {
           </s.Rating>
         </s.BookingHeading>
         <div>
-          <s.BookingForm onSubmit={handleSubmit(onSubmit)}>
+          <s.BookingForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
             <s.InputGroup>
               <Controller
                 name="dateFrom"
@@ -153,10 +147,10 @@ const Booking = () => {
                 id;
               }}
             />
-            {checkToken() ? (
-              <s.Button>Login</s.Button>
-            ) : (
+            {token ? (
               <s.Button type="submit">Reserve</s.Button>
+            ) : (
+              <s.StyledLink onClick={handleShow}>Reserve</s.StyledLink>
             )}
           </s.BookingForm>
         </div>
