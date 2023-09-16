@@ -17,7 +17,7 @@ import useStorage from "../hooks/useStorage";
 const checkToken = () => {
   const { load } = useStorage();
   const token = load("accessToken");
-  return token;
+  return { token };
 };
 
 export default checkToken;

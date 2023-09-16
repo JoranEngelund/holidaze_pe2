@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 /**
  * Table of Contents:
@@ -42,7 +43,7 @@ import { styled } from "styled-components";
       6g. TotalPrice;
 /* ----------------------------------------------------------------- */
 
-// Wrappers:
+// 1.  Wrappers:
 export const ContentWrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -76,8 +77,9 @@ export const MetaWrapperFirstRow = styled.div`
   justify-content: space-between;
   text-align: left;
 `;
+/* ----------------------------------------------------------------- */
 
-// Media & Location:
+// 2. Media & Location:
 export const CarouselMedia = styled.img`
   object-fit: cover;
   width: 95vw;
@@ -86,8 +88,9 @@ export const CarouselMedia = styled.img`
 export const Location = styled.h2`
   margin: 3rem 0 1rem;
 `;
+/* ----------------------------------------------------------------- */
 
-// Meta:
+// 3. Meta:
 export const VenueMetaTitle = styled.h4`
   font-weight: bold;
   margin-bottom: 1rem;
@@ -109,9 +112,9 @@ export const UnavailableMeta = styled.div`
   margin: auto 0.5rem 1rem 0.5rem;
   width: calc(45%);
 `;
-
 /* ----------------------------------------------------------------- */
-// Buttons, Inputs & Forms:
+
+// 4. Buttons, Inputs & Forms:
 export const Button = styled.button`
   border: none;
   color: white;
@@ -121,6 +124,22 @@ export const Button = styled.button`
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
   transition: background 0.3s ease-in-out;
   font-weight: bolder;
+  &:hover {
+    background: rgb(200 40 103 / 80%);
+  }
+`;
+
+export const StyledLink = styled(Link)`
+  font-family: "Open Sans", sans-serif !important;
+  border: none;
+  color: white;
+  border-radius: 3px;
+  padding: 0.33rem 8rem;
+  background: #c82867;
+  box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+  transition: background 0.3s ease-in-out;
+  margin-bottom: 2rem;
+  text-align: center;
   &:hover {
     background: rgb(200 40 103 / 80%);
   }
@@ -157,9 +176,9 @@ export const GuestSelect = styled.select`
   padding: 0 1rem;
   font-family: "Open Sans";
 `;
-
 /* ----------------------------------------------------------------- */
-// Owner, Manager & Details:
+
+// 5. Owner, Manager & Details:
 export const OwnerInformation = styled.div`
   width: calc(70%);
 `;
@@ -198,10 +217,9 @@ export const VenueDetails = styled.section`
     width: calc(100%);
   }
 `;
-
 /* ----------------------------------------------------------------- */
-// Booking, reservation, rating & price:
 
+// 6. Booking, reservation, rating & price:
 export const BookingDetails = styled.section`
   width: calc(40% - 1rem);
   margin: 1rem;
@@ -247,3 +265,4 @@ export const TotalPrice = styled.p`
   font-weight: bold;
   text-decoration: underline;
 `;
+/* ----------------------------------------------------------------- */

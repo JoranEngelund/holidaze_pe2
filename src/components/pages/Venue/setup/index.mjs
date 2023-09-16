@@ -20,6 +20,7 @@ const useSetup = () => {
   let { id } = useParams();
   const API_URL = `https://nf-api.onrender.com/api/v1/holidaze/venues/${id}?_owner=true&_bookings=true`;
   const { data, isError, isLoading } = useApi(API_URL);
+
   return { data, isError, isLoading };
 };
 

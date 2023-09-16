@@ -10,6 +10,7 @@ import {
   faWifi,
   faMugSaucer,
 } from "@fortawesome/free-solid-svg-icons";
+import { Loader } from "../../../Loader";
 
 /**
  * A component that displays a list of venues, including their details and images.
@@ -23,6 +24,8 @@ const AllVenues = () => {
 
   return (
     <s.VenuesContainer>
+      {isLoading ? <Loader /> : ""}
+
       <s.VenueHeading>Ready to Explore?</s.VenueHeading>
       {data?.map((listing) => (
         <s.Card to={`/venue/${listing.id}`} key={listing.id} id={listing.id}>
