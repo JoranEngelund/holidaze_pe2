@@ -7,6 +7,9 @@ import Booking from "./booking";
 import useModal from "../../../hooks/useModal";
 import LoginModal from "../../Modals/login";
 import RegisterModal from "../../Modals/register";
+import BookingSuccess from "../../Modals/bookingSuccess.jsx";
+import useSetup from "./setup/index.mjs";
+import { Loader } from "../../Loader";
 
 /**
  * Venue Component
@@ -30,9 +33,21 @@ const Venue = () => {
     showRegister,
     handleRegister,
     handleRegisterClose,
+    handleBookingSuccess,
+    handleCloseBookingSuccess,
+    showBookingSuccess,
   } = useModal();
+  const { isError, isLoading } = useSetup();
   return (
     <s.ContentWrapper>
+      {isLoading ? <Loader /> : ""}
+      {isError ? (
+        <s.ErrorWrapper>
+          <p>Oops! There seems to be some technical issues on our end! </p>
+        </s.ErrorWrapper>
+      ) : (
+        ""
+      )}
       <Media />
       <s.VenueDetailsWrapper>
         <s.VenueDetails>
@@ -43,7 +58,10 @@ const Venue = () => {
             <Meta />
           </s.VenueMetaWrapper>
         </s.VenueDetails>
-        <Booking handleShow={handleShow} />
+        <Booking
+          handleShow={handleShow}
+          handleBookingSuccess={handleBookingSuccess}
+        />
         <LoginModal
           show={show}
           handleClose={handleClose}
@@ -53,6 +71,10 @@ const Venue = () => {
           handleShow={handleShow}
           showRegister={showRegister}
           handleRegisterClose={handleRegisterClose}
+        />
+        <BookingSuccess
+          showBookingSuccess={showBookingSuccess}
+          handleCloseBookingSuccess={handleCloseBookingSuccess}
         />
       </s.VenueDetailsWrapper>
     </s.ContentWrapper>

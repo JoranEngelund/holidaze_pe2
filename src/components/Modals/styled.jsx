@@ -88,3 +88,29 @@ export const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
   font-size: 2rem;
   color: #c82867;
 `;
+
+export const SuccessBookingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`;
+
+export const SuccessHeading = styled.h4`
+  margin-top: -2rem;
+`;
+
+export const Line = styled.hr`
+  margin-bottom: 3rem;
+`;
+
+export const AlertMessage = styled.p`
+  margin: 2rem 2rem;
+`;
+
+export const AlertOption = styled.div`
+  margin-top: 1rem;
+
+  & a {
+    text-decoration: underline;
+  }
+`;

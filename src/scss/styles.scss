@@ -23,9 +23,12 @@ nav {
   font-family: "Montserrat", sans-serif !important;
 }
 
-.menuIcon,
-.modal-header {
+.menuIcon {
   border: none !important;
+}
+
+.modal-header {
+  border-bottom: none !important;
 }
 
 .navbar-toggler {

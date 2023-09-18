@@ -13,18 +13,16 @@ import { useState } from "react";
  * @param {boolean} props.show - Controls whether the modal is displayed.
  * @param {function} props.handleClose - Callback function to close the modal.
  * @param {function} props.handleRegister - Callback function to open the registration modal.
- * @param {Object} props.response - The response object from the login action (if available).
  *
  * @returns {JSX.Element} React component for the login modal.
  */
-const LoginModal = ({ show, handleClose, handleRegister, response }) => {
+const LoginModal = ({ show, handleClose, handleRegister }) => {
   const { isLoading, isError, isSuccess, sendFormData } = useAuthForm();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const {
     control: loginControl,
     handleSubmit: handleLoginSubmit,
     formState: { errors: loginErrors },
-    reset: resetLoginForm,
   } = useForm();
 
   const onLoginSubmit = (loginData) => {

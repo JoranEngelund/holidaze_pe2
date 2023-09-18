@@ -36,7 +36,7 @@ const useAuthForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false); // New state for success
-  const { save } = useStorage();
+  const { save, load } = useStorage();
 
   async function sendFormData(
     url,
@@ -59,6 +59,7 @@ const useAuthForm = () => {
       };
 
       if (accessToken) {
+        const accessToken = load("accessToken");
         headers["Authorization"] = `Bearer ${accessToken}`;
       }
       if (formData) {
@@ -68,25 +69,27 @@ const useAuthForm = () => {
       const response = await fetch(url, options);
 
       if (response.ok) {
+        setIsSuccess(true);
         const json = await response.json();
         setData(json);
-        console.log(json);
 
         if (shouldSaveToken) {
           const { accessToken, venueManager, ...user } = json;
-          console.log(accessToken);
-          console.log(user);
+          console.log("AccessToken:", accessToken);
+          console.log("User Data:", user);
           save("venueManager", venueManager);
           save("accessToken", accessToken);
           save("user", user);
           window.location.reload();
         }
-        setIsSuccess(true);
       } else {
+        const json = await response.json();
+        setData(json);
+        console.log("Error JSON:", json); // Log error response JSON
         setIsError(true);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error:", error);
       setIsError(true);
     } finally {
       setIsLoading(false);
@@ -97,8 +100,8 @@ const useAuthForm = () => {
     data,
     isLoading,
     isError,
-    isSuccess,
     sendFormData,
+    isSuccess,
     setIsSuccess,
   };
 };
