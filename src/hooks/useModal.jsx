@@ -31,13 +31,12 @@ import { useState } from "react";
 const useModal = () => {
   const [show, setShow] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
+  const [showBookingSuccess, setShowBookingSuccess] = useState(false);
 
   const handleShow = () => {
-    console.log("I'm open");
     setShow(true);
   };
   const handleClose = () => {
-    console.log("I'm closed");
     setShow(false);
   };
 
@@ -50,6 +49,15 @@ const useModal = () => {
     setShowRegister(false);
   };
 
+  const handleBookingSuccess = () => {
+    setShowBookingSuccess(true);
+  };
+
+  const handleCloseBookingSuccess = () => {
+    setShowBookingSuccess(false);
+    window.location.reload();
+  };
+
   return {
     show,
     handleClose,
@@ -57,6 +65,9 @@ const useModal = () => {
     showRegister,
     handleRegister,
     handleRegisterClose,
+    handleBookingSuccess,
+    handleCloseBookingSuccess,
+    showBookingSuccess,
   };
 };
 
