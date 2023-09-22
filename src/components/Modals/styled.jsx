@@ -11,7 +11,7 @@ export const Button = styled.button`
   border: none;
   color: white;
   border-radius: 3px;
-  padding: 0.33rem 8rem;
+  padding: 0.33rem 4rem;
   background: #c82867;
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
   transition: background 0.3s ease-in-out;
@@ -63,7 +63,6 @@ export const RegisterLink = styled(Link)`
 `;
 
 export const CheckboxContainer = styled.div`
-  align-self: baseline;
   display: flex;
   gap: 0.5rem;
   margin-bottom: 1rem;
@@ -108,9 +107,19 @@ export const AlertMessage = styled.p`
 `;
 
 export const AlertOption = styled.div`
-  margin-top: 1rem;
-
   & a {
     text-decoration: underline;
   }
+`;
+
+export const VenueManagerHeadingWrapper = styled.div`
+  text-align: center;
+`;
+
+export const VenueManagerHeading = styled.h4`
+  margin-top: -2rem;
+`;
+
+export const SubHeader = styled.p`
+  font-weight: bold;
 `;

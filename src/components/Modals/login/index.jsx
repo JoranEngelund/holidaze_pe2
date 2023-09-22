@@ -26,7 +26,8 @@ const LoginModal = ({ show, handleClose, handleRegister }) => {
   } = useForm();
 
   const onLoginSubmit = (loginData) => {
-    sendFormData(LOGIN_URL, "POST", loginData, null, true);
+    console.log(loginData);
+    sendFormData(LOGIN_URL, "POST", loginData, null, true, false);
     setIsSubmitted(true);
   };
 

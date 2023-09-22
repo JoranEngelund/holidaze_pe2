@@ -1,4 +1,4 @@
-import useSetup from "../setup/index.mjs";
+import useSetup from "../setup/index.jsx";
 import * as s from "../styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +8,6 @@ import { useForm, Controller } from "react-hook-form";
 import checkToken from "../../../../auth";
 import { useParams } from "react-router-dom";
 import { BOOKING_URL } from "../../../../constants";
-
 import "react-datepicker/dist/react-datepicker.css";
 import useAuthForm from "../../../../hooks/useAuthForm";
 import { FormLoader } from "../../../Loader";
@@ -68,7 +67,7 @@ const Booking = ({ handleShow, handleBookingSuccess }) => {
   }, [isSuccess]);
 
   const onSubmit = async (formData) => {
-    await sendFormData(BOOKING_URL, "POST", formData, true, false);
+    await sendFormData(BOOKING_URL, "POST", formData, true, false, false);
   };
 
   return (

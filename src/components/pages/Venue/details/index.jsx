@@ -1,4 +1,4 @@
-import useSetup from "../setup/index.mjs";
+import useSetup from "../setup/index.jsx";
 import * as s from "../styled";
 import { avatarPlaceholder } from "../../../../placeholders/imageplaceholders";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

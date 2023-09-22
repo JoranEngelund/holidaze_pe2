@@ -1,6 +1,6 @@
 import * as s from "../styled";
 import { venueImagePlaceholder } from "../../../../placeholders/imageplaceholders";
-import useSetup from "../setup/index.mjs";
+import useSetup from "../setup/index.jsx";
 import Carousel from "react-bootstrap/Carousel";
 
 /**

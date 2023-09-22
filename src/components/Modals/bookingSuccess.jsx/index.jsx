@@ -2,6 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import * as s from "../styled";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import useStorage from "../../../hooks/useStorage";
 
 /**
  * Represents a modal component displayed when a booking is successfully confirmed.
@@ -11,6 +12,9 @@ import { Link } from "react-router-dom";
  * @returns {JSX.Element} The BookingSuccess component JSX.
  */
 const BookingSuccess = ({ showBookingSuccess, handleCloseBookingSuccess }) => {
+  const { load } = useStorage();
+  const user = load("user");
+  const userName = user ? user.name : "";
   return (
     <Modal show={showBookingSuccess} onHide={handleCloseBookingSuccess}>
       <Modal.Header closeButton></Modal.Header>
@@ -23,7 +27,9 @@ const BookingSuccess = ({ showBookingSuccess, handleCloseBookingSuccess }) => {
             Your reservations is confirmed. Get ready for a fantastic stay with
             us!
           </s.AlertMessage>
-          <s.Button>View my trips</s.Button>
+          <s.RegisterLink to={`/profile/${userName}`}>
+            View my trips
+          </s.RegisterLink>
           <s.AlertOption>
             <p>Or</p>
             <Link to="/">Explore more venues</Link>

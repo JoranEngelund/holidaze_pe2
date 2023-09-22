@@ -1,4 +1,4 @@
-import useSetup from "../setup/index.mjs";
+import useSetup from "../setup/index.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaw,

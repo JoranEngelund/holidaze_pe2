@@ -1,4 +1,4 @@
-import useSetup from "../setup/index.mjs";
+import useSetup from "../setup/index.jsx";
 
 /**
  * Description Component

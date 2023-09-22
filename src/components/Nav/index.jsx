@@ -5,7 +5,8 @@ import Logo from "../Logo";
 import { NavDropdown } from "react-bootstrap";
 import checkToken from "../../auth";
 import useStorage from "../../hooks/useStorage";
-
+import useGetProfile from "../../hooks/useGetProfile";
+import { PROFILE_URL } from "../../constants";
 /**
  * Navigation component for displaying the website's navigation menu.
  *
@@ -18,11 +19,13 @@ const Navigation = ({ handleShow }) => {
   const isActive = (link) => {
     return location.pathname === link;
   };
-
   const { token } = checkToken();
   const { load, clear } = useStorage();
   const user = load("user");
-  const venueManager = load("venueManager");
+  const userName = user ? user.name : "";
+  const PROFILES_URL = `${PROFILE_URL}${userName}?_bookings=true&_venues=true&`;
+  const { data } = useGetProfile(PROFILES_URL);
+  const { venueManager } = data;
 
   return (
     <Navbar expand="lg" className="nav">
@@ -42,19 +45,23 @@ const Navigation = ({ handleShow }) => {
               user && venueManager !== undefined ? (
                 venueManager ? (
                   <NavDropdown title={user.name} id="basic-nav-dropdown">
-                    <NavDropdown.Item href="/profile/:name">
+                    <NavDropdown.Item href={`/profile/${userName}`}>
                       Profile
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/profile/:name/reservations">
+                    <NavDropdown.Item
+                      href={`/profile/${userName}/reservations`}
+                    >
                       Reservations
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="/profile/venue-manager-settings">
+                    <NavDropdown.Item
+                      href={`/profile/${userName}/venue-manager-settings`}
+                    >
                       Add Venue
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       href="/"
                       onClick={() => {
-                        clear(); // Invoke the clear function here
+                        clear();
                         window.location.reload();
                       }}
                     >
@@ -63,14 +70,14 @@ const Navigation = ({ handleShow }) => {
                   </NavDropdown>
                 ) : (
                   <NavDropdown title={user.name} id="basic-nav-dropdown">
-                    <NavDropdown.Item href="#action/3.1">
+                    <NavDropdown.Item href={`/profile/${userName}`}>
                       Profile
                     </NavDropdown.Item>
                     <NavDropdown.Item
                       to="/"
                       onClick={() => {
                         clear(); // Invoke the clear function here
-                        window.location.reload();
+                        window.location.replace("/");
                       }}
                     >
                       Log out

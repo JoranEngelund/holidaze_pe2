@@ -32,6 +32,7 @@ const useModal = () => {
   const [show, setShow] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
+  const [showManagerModal, setShowManagerModal] = useState(false);
 
   const handleShow = () => {
     setShow(true);
@@ -58,6 +59,14 @@ const useModal = () => {
     window.location.reload();
   };
 
+  const handleManagerModal = () => {
+    setShowManagerModal(true);
+  };
+
+  const handleCloseManagerModal = () => {
+    setShowManagerModal(false);
+  };
+
   return {
     show,
     handleClose,
@@ -68,6 +77,9 @@ const useModal = () => {
     handleBookingSuccess,
     handleCloseBookingSuccess,
     showBookingSuccess,
+    handleManagerModal,
+    handleCloseManagerModal,
+    showManagerModal,
   };
 };
 
