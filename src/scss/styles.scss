@@ -27,6 +27,10 @@ nav {
   border: none !important;
 }
 
+.react-tabs {
+  width: 53vw;
+}
+
 .modal-header {
   border-bottom: none !important;
 }
@@ -79,4 +83,22 @@ nav {
 
 .react-datepicker__day--disabled {
   text-decoration: line-through;
+}
+
+.react-tabs__tab--selected {
+  background: #c82867 !important;
+  color: white !important;
+}
+
+@media screen and (max-width: 871px) {
+  .react-tabs__tab-panel {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+@media (max-width: 536px) {
+  .react-tabs {
+    width: auto;
+  }
 }

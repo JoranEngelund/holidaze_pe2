@@ -43,7 +43,8 @@ const useAuthForm = () => {
     method,
     formData,
     accessToken,
-    shouldSaveToken = true
+    shouldSaveToken = true,
+    shouldRefresh = true
   ) {
     try {
       setIsLoading(true);
@@ -80,6 +81,10 @@ const useAuthForm = () => {
           save("venueManager", venueManager);
           save("accessToken", accessToken);
           save("user", user);
+          window.location.reload();
+        }
+
+        if (shouldRefresh) {
           window.location.reload();
         }
       } else {

@@ -34,7 +34,7 @@ const RegisterModal = ({
 
   const onRegisterSubmit = (data) => {
     console.log(data);
-    sendFormData(REGISTER_URL, "POST", data, null, false);
+    sendFormData(REGISTER_URL, "POST", data, null, false, false);
   };
 
   return (

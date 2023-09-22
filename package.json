@@ -1,7 +1,7 @@
 {
   "name": "holidaze_pe2",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -23,6 +23,7 @@
     "react-hook-form": "^7.45.4",
     "react-router-dom": "^6.15.0",
     "react-spinners": "^0.13.8",
+    "react-tabs": "^6.0.2",
     "sass": "^1.66.1",
     "styled-components": "^6.0.7"
   },

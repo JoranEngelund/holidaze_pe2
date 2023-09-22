@@ -9,6 +9,7 @@ import { styled } from "styled-components";
       1c. OwnerAvatarWrapper -
       1d. VenueMetaWrapper -
       1e. MetaWrapperFirstRow -
+      1f. ErrorWrapper -
 /----------------------------------------------------/
  * 2. Media & Location:
       2a. CarouselMedia -
@@ -76,6 +77,13 @@ export const MetaWrapperFirstRow = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
   text-align: left;
+`;
+
+export const ErrorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 1rem;
 `;
 /* ----------------------------------------------------------------- */
 

@@ -8,7 +8,7 @@ import useModal from "../../../hooks/useModal";
 import LoginModal from "../../Modals/login";
 import RegisterModal from "../../Modals/register";
 import BookingSuccess from "../../Modals/bookingSuccess.jsx";
-import useSetup from "./setup/index.mjs";
+import useSetup from "./setup/index.jsx";
 import { Loader } from "../../Loader";
 
 /**
