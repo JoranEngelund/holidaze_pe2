@@ -19,11 +19,14 @@ const Navigation = ({ handleShow }) => {
   const isActive = (link) => {
     return location.pathname === link;
   };
+
   const { token } = checkToken();
   const { load, clear } = useStorage();
   const user = load("user");
   const userName = user ? user.name : "";
-  const PROFILES_URL = `${PROFILE_URL}${userName}?_bookings=true&_venues=true&`;
+  const PROFILES_URL = userName
+    ? `${PROFILE_URL}${userName}?_bookings=true&_venues=true&`
+    : "";
   const { data } = useGetProfile(PROFILES_URL);
   const { venueManager } = data;
 
