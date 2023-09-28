@@ -21,7 +21,7 @@ const Media = () => {
   const { location, media, name } = data;
 
   return (
-    <div>
+    <s.MediaWrapper>
       <s.Location>
         {location && location.address
           ? location.address
@@ -45,7 +45,7 @@ const Media = () => {
       ) : (
         <s.CarouselMedia src={venueImagePlaceholder} />
       )}
-    </div>
+    </s.MediaWrapper>
   );
 };
 

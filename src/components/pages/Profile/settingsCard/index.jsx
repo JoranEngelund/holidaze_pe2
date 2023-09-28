@@ -1,5 +1,5 @@
 import * as s from "../styled";
-
+import useStorage from "../../../../hooks/useStorage";
 /**
  * Displays user profile settings options in a card.
  * @param {Object} data - User profile data.
@@ -10,12 +10,23 @@ import * as s from "../styled";
  * the user is a venue manager or not.
  */
 const SettingsCard = ({ data, handleManagerModal }) => {
+  const { load } = useStorage();
+  const user = load("user");
+  const userName = user ? user.name : "";
   return (
     <s.SettingsCard>
       <h2>Profile Settings</h2>
       {data?.venueManager ? (
         <>
-          <s.SettingsButton>Add Venue</s.SettingsButton>{" "}
+          <s.SettingsButton
+            onClick={() =>
+              window.location.replace(
+                `/profile/${userName}/venue-manager-settings`
+              )
+            }
+          >
+            Add Venue
+          </s.SettingsButton>{" "}
           <s.SettingsButton>Update Avatar</s.SettingsButton>{" "}
           <s.QuitButton onClick={handleManagerModal}>
             Quit as Manager

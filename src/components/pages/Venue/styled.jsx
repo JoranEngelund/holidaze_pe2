@@ -10,6 +10,7 @@ import { styled } from "styled-components";
       1d. VenueMetaWrapper -
       1e. MetaWrapperFirstRow -
       1f. ErrorWrapper -
+      1g. MediaWrapper -
 /----------------------------------------------------/
  * 2. Media & Location:
       2a. CarouselMedia -
@@ -84,6 +85,10 @@ export const ErrorWrapper = styled.div`
   flex-direction: column;
   text-align: center;
   margin-top: 1rem;
+`;
+
+export const MediaWrapper = styled.div`
+  margin: 1rem;
 `;
 /* ----------------------------------------------------------------- */
 
