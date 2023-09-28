@@ -11,6 +11,7 @@ import { BOOKING_URL } from "../../../../constants";
 import "react-datepicker/dist/react-datepicker.css";
 import useAuthForm from "../../../../hooks/useAuthForm";
 import { FormLoader } from "../../../Loader";
+import useStorage from "../../../../hooks/useStorage.jsx";
 
 /**
  * Booking component for displaying and handling booking details.
@@ -23,9 +24,13 @@ import { FormLoader } from "../../../Loader";
 const Booking = ({ handleShow, handleBookingSuccess }) => {
   let { id } = useParams();
   const { data } = useSetup();
-  const { price, rating, maxGuests, bookings } = data;
+  const { price, rating, maxGuests, bookings, owner } = data;
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const { load } = useStorage();
+
+  const user = load("user");
+  const userName = user ? user.name : "";
 
   const { token } = checkToken();
 
@@ -67,6 +72,8 @@ const Booking = ({ handleShow, handleBookingSuccess }) => {
   }, [isSuccess]);
 
   const onSubmit = async (formData) => {
+    formData.guests = parseFloat(formData.guests);
+
     await sendFormData(BOOKING_URL, "POST", formData, true, false, false);
   };
 
@@ -83,96 +90,103 @@ const Booking = ({ handleShow, handleBookingSuccess }) => {
           </s.Rating>
         </s.BookingHeading>
         <div>
-          <s.BookingForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-            <s.InputGroup>
+          {userName === owner?.name ? (
+            <s.StyledLink>Update Venue Details</s.StyledLink>
+          ) : (
+            <s.BookingForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+              <s.InputGroup>
+                <Controller
+                  name="dateFrom"
+                  control={control}
+                  defaultValue={null}
+                  render={({ field }) => (
+                    <DatePicker
+                      name="dateFrom"
+                      required
+                      placeholderText="Check-In"
+                      selectsStart
+                      isClearable
+                      filterDate={weekend}
+                      selected={startDate}
+                      onChange={(date) => {
+                        setStartDate(date);
+                        field.onChange(date.toISOString());
+                      }}
+                      startDate={startDate}
+                      excludeDateIntervals={excludeDateIntervals}
+                    />
+                  )}
+                />
+                <Controller
+                  name="dateTo"
+                  control={control}
+                  defaultValue={null}
+                  render={({ field }) => (
+                    <DatePicker
+                      name="dateTo"
+                      required
+                      placeholderText="Check-Out"
+                      selectsEnd
+                      isClearable
+                      filterDate={weekend}
+                      selected={endDate}
+                      onChange={(date) => {
+                        setEndDate(date);
+                        field.onChange(date.toISOString());
+                      }}
+                      endDate={endDate}
+                      startDate={startDate}
+                      minDate={startDate}
+                      excludeDateIntervals={excludeDateIntervals}
+                    />
+                  )}
+                />
+              </s.InputGroup>
               <Controller
-                name="dateFrom"
+                required
+                name="guests"
                 control={control}
-                defaultValue={null}
+                defaultValue={1} // Set your default value here
                 render={({ field }) => (
-                  <DatePicker
-                    name="dateFrom"
-                    required
-                    placeholderText="Check-In"
-                    selectsStart
-                    isClearable
-                    filterDate={weekend}
-                    selected={startDate}
-                    onChange={(date) => {
-                      setStartDate(date);
-                      field.onChange(date.toISOString());
-                    }}
-                    startDate={startDate}
-                    excludeDateIntervals={excludeDateIntervals}
-                  />
+                  <s.GuestSelect {...field}>
+                    {guestOptions.map((option) => (
+                      <option key={option} value={parseInt(option, 10)}>
+                        {option} guests
+                      </option>
+                    ))}
+                  </s.GuestSelect>
                 )}
               />
               <Controller
-                name="dateTo"
+                name="venueId"
                 control={control}
-                defaultValue={null}
-                render={({ field }) => (
-                  <DatePicker
-                    name="dateTo"
-                    required
-                    placeholderText="Check-Out"
-                    selectsEnd
-                    isClearable
-                    filterDate={weekend}
-                    selected={endDate}
-                    onChange={(date) => {
-                      setEndDate(date);
-                      field.onChange(date.toISOString());
-                    }}
-                    endDate={endDate}
-                    startDate={startDate}
-                    minDate={startDate}
-                    excludeDateIntervals={excludeDateIntervals}
-                  />
-                )}
+                defaultValue={id}
+                render={() => {
+                  id;
+                }}
               />
-            </s.InputGroup>
-            <Controller
-              required
-              name="guests"
-              control={control}
-              defaultValue={1} // Set your default value here
-              render={({ field }) => (
-                <s.GuestSelect {...field}>
-                  {guestOptions.map((option) => (
-                    <option key={option} value={parseInt(option, 10)}>
-                      {option} guests
-                    </option>
-                  ))}
-                </s.GuestSelect>
+              {token ? (
+                <s.Button type="submit">
+                  {isLoading ? <FormLoader /> : "Reserve"}
+                </s.Button>
+              ) : (
+                <s.StyledLink onClick={handleShow}>Reserve</s.StyledLink>
               )}
-            />
-            <Controller
-              name="venueId"
-              control={control}
-              defaultValue={id}
-              render={() => {
-                id;
-              }}
-            />
-            {token ? (
-              <s.Button type="submit">
-                {isLoading ? <FormLoader /> : "Reserve"}
-              </s.Button>
-            ) : (
-              <s.StyledLink onClick={handleShow}>Reserve</s.StyledLink>
-            )}
-            {isError ? (
-              <s.ErrorWrapper>
-                <p>
-                  Oops! There was an issue processing your venue booking
-                  request.
-                </p>
-              </s.ErrorWrapper>
-            ) : (
-              ""
-            )}
-          </s.BookingForm>
+              {isError ? (
+                <s.ErrorWrapper>
+                  <p>
+                    Oops! There was an issue processing your booking request.
+                  </p>
+                  <p>Please refresh and try again, or try at a later time</p>
+                  <s.StyledLink onClick={window.location.reload}>
+                    Refresh
+                  </s.StyledLink>
+                </s.ErrorWrapper>
+              ) : (
+                ""
+              )}
+            </s.BookingForm>
+          )}
         </div>
         {calculateNumberOfNights() >= 1 ? <hr /> : ""}
         {calculateNumberOfNights() >= 1 ? (

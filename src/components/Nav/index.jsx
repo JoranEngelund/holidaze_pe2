@@ -52,11 +52,6 @@ const Navigation = ({ handleShow }) => {
                       Profile
                     </NavDropdown.Item>
                     <NavDropdown.Item
-                      href={`/profile/${userName}/reservations`}
-                    >
-                      Reservations
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
                       href={`/profile/${userName}/venue-manager-settings`}
                     >
                       Add Venue
