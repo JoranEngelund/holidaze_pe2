@@ -159,6 +159,10 @@ export const TitleRating = styled.div`
 
   gap: 4rem;
   margin: 0.7rem 0.33rem 0.33rem;
+
+  @media (max-width: 445px) {
+    gap: 0;
+  }
 `;
 
 export const VenueLocation = styled.p`
