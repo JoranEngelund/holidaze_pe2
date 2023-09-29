@@ -5,6 +5,7 @@ import Home from "./components/pages/Home";
 import Venue from "./components/pages/Venue";
 import Profile from "./components/pages/Profile";
 import CreateVenue from "./components/pages/CreateVenue";
+import EditVenue from "./components/pages/Edit";
 
 const App = () => {
   return (
@@ -20,7 +21,10 @@ const App = () => {
           element={<CreateVenue />}
         />
         <Route path="/profile/settings" element />
-        <Route path="/profile/venue-settings" element />
+        <Route
+          path="/profile/:name/venue-settings/:id"
+          element={<EditVenue />}
+        />
       </Route>
     </Routes>
   );

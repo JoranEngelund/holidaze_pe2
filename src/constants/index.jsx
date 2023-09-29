@@ -6,3 +6,4 @@ export const REGISTER_URL = `${BASE_URL}auth/register`;
 export const LOGIN_URL = `${BASE_URL}auth/login`;
 export const PROFILE_URL = `${BASE_URL}profiles/`;
 export const POST_VENUE = `${BASE_URL}venues`;
+export const EDIT_VENUE = `${BASE_URL}venues`;
