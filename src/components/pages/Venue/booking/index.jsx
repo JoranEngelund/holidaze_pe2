@@ -91,7 +91,15 @@ const Booking = ({ handleShow, handleBookingSuccess }) => {
         </s.BookingHeading>
         <div>
           {userName === owner?.name ? (
-            <s.StyledLink>Update Venue Details</s.StyledLink>
+            <s.StyledLink
+              to={
+                userName
+                  ? `/profile/${userName}/venue-settings/${id}`
+                  : "/fallback-path"
+              }
+            >
+              Update Venue Details
+            </s.StyledLink>
           ) : (
             <s.BookingForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
               <s.InputGroup>

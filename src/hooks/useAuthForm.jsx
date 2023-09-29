@@ -32,10 +32,11 @@ import useStorage from "./useStorage";
  * setIsSuccess(false);
  */
 const useAuthForm = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null); // Initialize data with null
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false); // New state for success
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const { save, load } = useStorage();
 
   async function sendFormData(
@@ -60,8 +61,8 @@ const useAuthForm = () => {
       };
 
       if (accessToken) {
-        const accessToken = load("accessToken");
-        headers["Authorization"] = `Bearer ${accessToken}`;
+        const savedToken = load("accessToken");
+        headers["Authorization"] = `Bearer ${savedToken}`;
       }
       if (formData) {
         options.body = JSON.stringify(formData);
@@ -69,7 +70,10 @@ const useAuthForm = () => {
 
       const response = await fetch(url, options);
 
-      if (response.ok) {
+      if (response.status === 204) {
+        setIsSuccess(true);
+        setData(null);
+      } else if (response.ok) {
         setIsSuccess(true);
         const json = await response.json();
         setData(json);
@@ -88,14 +92,12 @@ const useAuthForm = () => {
           window.location.reload();
         }
       } else {
-        const json = await response.json();
-        setData(json);
-        console.log("Error JSON:", json); // Log error response JSON
         setIsError(true);
+        console.error("Error response from server:", response.status);
       }
     } catch (error) {
-      console.log("Error:", error);
       setIsError(true);
+      console.error("Error occurred during fetch:", error);
     } finally {
       setIsLoading(false);
     }
@@ -105,9 +107,8 @@ const useAuthForm = () => {
     data,
     isLoading,
     isError,
-    sendFormData,
     isSuccess,
-    setIsSuccess,
+    sendFormData,
   };
 };
 

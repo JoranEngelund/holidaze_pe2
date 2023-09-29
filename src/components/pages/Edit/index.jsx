@@ -10,26 +10,39 @@ import * as s from "./styled";
 import { useForm, Controller } from "react-hook-form";
 import { countries, continents } from "../../../helpers/arrays";
 import useAuthForm from "../../../hooks/useAuthForm";
-import { POST_VENUE } from "../../../constants";
 import { FormLoader } from "../../Loader";
 import { useEffect } from "react";
 import useStorage from "../../../hooks/useStorage";
 import useModal from "../../../hooks/useModal";
-import CreateVenueSuccess from "../../Modals/createVenueSuccess.jsx";
+import useSetup from "../Venue/setup";
+import { useParams } from "react-router-dom";
+import UpdateSuccess from "../../Modals/updateSuccess.jsx";
+import DeleteAlert from "../../Modals/delete/deleteAlert";
+import DeleteSuccess from "../../Modals/delete/deleteSuccess";
 
 /**
- * CreateVenue component for managing venue settings.
+ * Represents a function component for editing or deleting a venue.
  *
- * This component allows users to create venue information, including name, price,
- * maximum guests, rating, description, gallery images, and location details.
- *
- * @returns {JSX.Element} The CreateVenue component.
+ * @function
+ * @returns {JSX.Element} The UI for editing or deleting a venue.
  */
 const CreateVenue = () => {
+  const { id } = useParams();
   const { isLoading, isError, sendFormData, isSuccess } = useAuthForm();
+  const { data } = useSetup();
+  const EDIT_VENUE = `https://nf-api.onrender.com/api/v1/holidaze/venues/${id}`;
   const { load } = useStorage();
-  const { showVenueSuccess, handleOpenVenueSuccess, handleCloseVenueSuccess } =
-    useModal();
+  const {
+    handleOpenUpdateSuccess,
+    handleCloseUpdateSuccess,
+    showUpdateSuccess,
+    handleOpenDeleteAlert,
+    handleCloseDeleteAlert,
+    showDeleteAlert,
+    showDeleteSuccess,
+    handleOpenDeleteSuccess,
+    handleCloseDeleteSuccess,
+  } = useModal();
 
   const user = load("user");
   const userName = user ? user.name : "";
@@ -41,7 +54,7 @@ const CreateVenue = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      handleOpenVenueSuccess();
+      handleOpenUpdateSuccess();
     }
   }, [isSuccess]);
 
@@ -59,7 +72,7 @@ const CreateVenue = () => {
     }
 
     console.log(formData);
-    await sendFormData(POST_VENUE, "POST", formData, true, false, false);
+    await sendFormData(EDIT_VENUE, "PUT", formData, true, false, false);
   };
 
   return (
@@ -70,13 +83,17 @@ const CreateVenue = () => {
       </s.StyledLinks>
       <hr />
       <s.HeadingWrapper>
-        <h1>Venue Manager Settings</h1>
-        <s.StyledNav href="#venue-location">Venue Location</s.StyledNav>
+        <h1>Edit Venue Settings</h1>
+        <s.SubNav>
+          <s.StyledNav href="#venue-location">Venue Location</s.StyledNav>
+          <s.StyledNav href="#delete-venue">Delete Venue</s.StyledNav>
+        </s.SubNav>
       </s.HeadingWrapper>
       <s.Form onSubmit={handleSubmit(onSubmit)}>
         <s.InputGroup>
           <s.InputContainer>
             <s.Label htmlFor="name">Name of the venue *</s.Label>
+            <i>Current name: {data?.name}</i>
             <Controller
               name="name"
               control={control}
@@ -91,10 +108,6 @@ const CreateVenue = () => {
                   value: 3,
                   message: "Minimum 3 characters",
                 },
-                maxLength: {
-                  value: 50,
-                  message: "Maximum 20 characters",
-                },
               }}
               render={({ field }) => (
                 <>
@@ -102,7 +115,7 @@ const CreateVenue = () => {
                     {...field}
                     type="text"
                     name="name"
-                    placeholder="Name"
+                    placeholder="Update name"
                   />
                   {errors.name?.type === "required" && (
                     <p role="alert">Name is required</p>
@@ -116,10 +129,11 @@ const CreateVenue = () => {
           </s.InputContainer>
           <s.InputContainer>
             <s.Label htmlFor="price">Price per night *</s.Label>
+            <i>Current Price: {data?.price},-</i>
             <Controller
               name="price"
               control={control}
-              defaultValue={0} // Set defaultValue to a numeric value
+              defaultValue="" // Set defaultValue to a numeric value
               rules={{
                 required: true,
                 minLength: {
@@ -133,7 +147,7 @@ const CreateVenue = () => {
                     {...field}
                     type="number"
                     name="price"
-                    placeholder="0"
+                    placeholder="Update price: 0"
                   />
                   {errors.price?.type === "required" && (
                     <p role="alert">Price is required</p>
@@ -147,17 +161,18 @@ const CreateVenue = () => {
           </s.InputContainer>
           <s.InputContainer>
             <s.Label htmlFor="guests">How many guests are allowed? *</s.Label>
+            <i>Current Max Guests: {data?.maxGuests}</i>
             <Controller
               name="maxGuests"
               control={control}
-              defaultValue={1} // Set defaultValue to a numeric value
+              defaultValue="" // Set defaultValue to a numeric value
               rules={{
                 required: true,
-                min: {
+                minLength: {
                   value: 1,
                   message: "Minimum guests of 1",
                 },
-                max: {
+                maxLength: {
                   value: 100,
                   message: "Maximum guests of 100",
                 },
@@ -168,7 +183,7 @@ const CreateVenue = () => {
                     {...field}
                     type="number"
                     name="maxGuests"
-                    placeholder="1"
+                    placeholder="Update max guests: "
                   />
                   {errors.maxGuests?.type === "required" && (
                     <p role="alert">Max guests are required</p>
@@ -182,16 +197,17 @@ const CreateVenue = () => {
           </s.InputContainer>
           <s.InputContainer>
             <s.Label htmlFor="rating">What's your venue's rating?</s.Label>
+            <i>Current Rating: {data?.rating}</i>
             <Controller
               name="rating"
               control={control}
-              defaultValue={0} // Set defaultValue to a numeric value
+              defaultValue=""
               rules={{
-                min: {
+                minLength: {
                   value: 0,
                   message: "Minimum rating of 0",
                 },
-                max: {
+                maxLength: {
                   value: 5,
                   message: "Maximum rating of 5",
                 },
@@ -202,7 +218,7 @@ const CreateVenue = () => {
                     {...field}
                     type="number"
                     name="rating"
-                    placeholder="0"
+                    placeholder="Update rating: 0"
                   />
                   {errors.rating?.message && (
                     <p role="alert">{errors.rating?.message}</p>
@@ -217,6 +233,9 @@ const CreateVenue = () => {
             <s.Label htmlFor="description">
               Write a description of your venue *
             </s.Label>
+            <s.DescriptionPlaceholder>
+              <b>Current Description:</b> {data?.description}
+            </s.DescriptionPlaceholder>
             <Controller
               name="description"
               control={control}
@@ -233,7 +252,7 @@ const CreateVenue = () => {
                   <s.Description
                     {...field}
                     name="description"
-                    placeholder="This venue is ..."
+                    placeholder="Update description ..."
                   />
                   {errors.description?.type === "required" && (
                     <p role="alert">Description is required</p>
@@ -334,6 +353,7 @@ const CreateVenue = () => {
         </s.LocationHeading>
         <s.InputGroup>
           <s.InputContainer>
+            <i>Current Address: {data?.location?.address}</i>
             <Controller
               name="location.address"
               control={control}
@@ -347,10 +367,6 @@ const CreateVenue = () => {
                   value: 3,
                   message: "Minimum 3 characters",
                 },
-                maxLength: {
-                  value: 50,
-                  message: "Maximum 20 characters",
-                },
               }}
               render={({ field }) => (
                 <>
@@ -358,7 +374,7 @@ const CreateVenue = () => {
                     {...field}
                     type="text"
                     name="location.address"
-                    placeholder="Address"
+                    placeholder="Update address"
                   />
                   {errors.address?.message && (
                     <p role="alert">{errors.address?.message}</p>
@@ -368,6 +384,7 @@ const CreateVenue = () => {
             />
           </s.InputContainer>
           <s.InputContainer>
+            <i>Current City: {data?.location?.city}</i>
             <Controller
               name="location.city"
               control={control}
@@ -381,10 +398,6 @@ const CreateVenue = () => {
                   value: 3,
                   message: "Minimum 3 characters",
                 },
-                maxLength: {
-                  value: 50,
-                  message: "Maximum 20 characters",
-                },
               }}
               render={({ field }) => (
                 <>
@@ -392,7 +405,7 @@ const CreateVenue = () => {
                     {...field}
                     type="text"
                     name="location.city"
-                    placeholder="City"
+                    placeholder="Update city"
                   />
                   {errors.city?.message && (
                     <p role="alert">{errors.city?.message}</p>
@@ -404,6 +417,7 @@ const CreateVenue = () => {
         </s.InputGroup>
         <s.InputGroup>
           <div>
+            <i>Current Country: {data?.location?.country}</i>
             <Controller
               name="location.country"
               control={control}
@@ -411,7 +425,7 @@ const CreateVenue = () => {
               render={({ field }) => (
                 <s.Select {...field}>
                   <option value="" disabled>
-                    Select a country
+                    Update country
                   </option>
                   {countries.map((country) => (
                     <option key={country} value={country}>
@@ -423,6 +437,7 @@ const CreateVenue = () => {
             />
           </div>
           <div>
+            <i>Current Continent: {data?.location?.continent}</i>
             <Controller
               name="location.continent"
               control={control}
@@ -430,7 +445,7 @@ const CreateVenue = () => {
               render={({ field }) => (
                 <s.Select {...field}>
                   <option value="" disabled>
-                    Select a continent
+                    Update continent
                   </option>
                   {continents.map((continent) => (
                     <option key={continent} value={continent}>
@@ -445,11 +460,11 @@ const CreateVenue = () => {
         <s.Line />
         <div>
           <s.Button type="submit">
-            {isLoading ? <FormLoader /> : "Add Venue"}
+            {isLoading ? <FormLoader /> : "Update Venue"}
           </s.Button>
           {isError ? (
             <s.ErrorWrapper>
-              <p>We're struggling to get your venue live</p>
+              <p>We're struggling to update your venue</p>
               <p>Try again to refresh and fill in the form again</p>
               <s.Button onClick={() => Window.location.reload}>
                 Refresh
@@ -460,9 +475,36 @@ const CreateVenue = () => {
           )}
         </div>
       </s.Form>
-      <CreateVenueSuccess
-        showVenueSuccess={showVenueSuccess}
-        handleCloseVenueSuccess={handleCloseVenueSuccess}
+      <s.Line />
+      <section>
+        <h2 id="delete-venue">Delete Venue</h2>
+        <s.DeleteWrapper>
+          <s.DeleteInfo>
+            <s.DeleteSubheading>Ready to remove your venue?</s.DeleteSubheading>
+            <s.DeleteParagraph>
+              Deleting your hosted venue on Holidaze is a breeze. Just one
+              click, and your property will be removed from our platform
+            </s.DeleteParagraph>
+          </s.DeleteInfo>
+          <div>
+            <s.Button onClick={() => handleOpenDeleteAlert()}>
+              Remove Venue
+            </s.Button>
+          </div>
+        </s.DeleteWrapper>
+      </section>
+      <UpdateSuccess
+        showUpdateSuccess={showUpdateSuccess}
+        handleCloseUpdateSuccess={handleCloseUpdateSuccess}
+      />
+      <DeleteAlert
+        showDeleteAlert={showDeleteAlert}
+        handleOpenDeleteSuccess={handleOpenDeleteSuccess}
+        handleCloseDeleteAlert={handleCloseDeleteAlert}
+      />
+      <DeleteSuccess
+        showDeleteSuccess={showDeleteSuccess}
+        handleCloseDeleteSuccess={handleCloseDeleteSuccess}
       />
     </s.PageWrapper>
   );

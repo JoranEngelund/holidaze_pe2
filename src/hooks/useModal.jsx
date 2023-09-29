@@ -46,6 +46,9 @@ const useModal = () => {
   const [showBookingSuccess, setShowBookingSuccess] = useState(false);
   const [showManagerModal, setShowManagerModal] = useState(false);
   const [showVenueSuccess, setShowVenueSuccess] = useState(false);
+  const [showUpdateSuccess, setShowUpdateSuccess] = useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
 
   const handleShow = () => {
     setShow(true);
@@ -89,6 +92,33 @@ const useModal = () => {
     window.location.reload();
   };
 
+  const handleOpenUpdateSuccess = () => {
+    setShowUpdateSuccess(true);
+  };
+
+  const handleCloseUpdateSuccess = () => {
+    setShowUpdateSuccess(false);
+    window.location.reload();
+  };
+
+  const handleOpenDeleteAlert = () => {
+    setShowDeleteAlert(true);
+  };
+
+  const handleCloseDeleteAlert = () => {
+    setShowDeleteAlert(false);
+  };
+
+  const handleOpenDeleteSuccess = () => {
+    setShowDeleteAlert(false);
+    setShowDeleteSuccess(true);
+  };
+
+  const handleCloseDeleteSuccess = () => {
+    setShowDeleteSuccess(false);
+    window.location.replace("/");
+  };
+
   return {
     show,
     handleClose,
@@ -105,6 +135,15 @@ const useModal = () => {
     showVenueSuccess,
     handleOpenVenueSuccess,
     handleCloseVenueSuccess,
+    handleOpenUpdateSuccess,
+    handleCloseUpdateSuccess,
+    showUpdateSuccess,
+    handleOpenDeleteAlert,
+    handleCloseDeleteAlert,
+    showDeleteAlert,
+    handleOpenDeleteSuccess,
+    handleCloseDeleteSuccess,
+    showDeleteSuccess,
   };
 };
 
