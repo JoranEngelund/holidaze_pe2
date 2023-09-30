@@ -9,7 +9,7 @@ import useStorage from "../../../../hooks/useStorage";
  * @description This component renders profile settings options based on whether
  * the user is a venue manager or not.
  */
-const SettingsCard = ({ data, handleManagerModal }) => {
+const SettingsCard = ({ data, handleManagerModal, handleOpenUpdateAvatar }) => {
   const { load } = useStorage();
   const user = load("user");
   const userName = user ? user.name : "";
@@ -27,14 +27,18 @@ const SettingsCard = ({ data, handleManagerModal }) => {
           >
             Add Venue
           </s.SettingsButton>{" "}
-          <s.SettingsButton>Update Avatar</s.SettingsButton>{" "}
+          <s.SettingsButton onClick={handleOpenUpdateAvatar}>
+            Update Avatar
+          </s.SettingsButton>{" "}
           <s.QuitButton onClick={handleManagerModal}>
             Quit as Manager
           </s.QuitButton>
         </>
       ) : (
         <>
-          <s.SettingsButton>Update Avatar</s.SettingsButton>{" "}
+          <s.SettingsButton onClick={handleOpenUpdateAvatar}>
+            Update Avatar
+          </s.SettingsButton>{" "}
           <s.SettingsButton onClick={handleManagerModal}>
             Start Managing
           </s.SettingsButton>
