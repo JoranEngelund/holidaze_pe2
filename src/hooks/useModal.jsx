@@ -49,7 +49,7 @@ const useModal = () => {
   const [showUpdateSuccess, setShowUpdateSuccess] = useState(false);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const [showDeleteSuccess, setShowDeleteSuccess] = useState(false);
-
+  const [showUpdateAvatar, setShowUpdateAvatar] = useState(false);
   const handleShow = () => {
     setShow(true);
   };
@@ -119,6 +119,14 @@ const useModal = () => {
     window.location.replace("/");
   };
 
+  const handleOpenUpdateAvatar = () => {
+    setShowUpdateAvatar(true);
+  };
+
+  const handleCloseUpdateAvatar = () => {
+    setShowUpdateAvatar(false);
+  };
+
   return {
     show,
     handleClose,
@@ -144,6 +152,9 @@ const useModal = () => {
     handleOpenDeleteSuccess,
     handleCloseDeleteSuccess,
     showDeleteSuccess,
+    showUpdateAvatar,
+    handleCloseUpdateAvatar,
+    handleOpenUpdateAvatar,
   };
 };
 

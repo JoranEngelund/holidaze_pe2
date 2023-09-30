@@ -6,6 +6,7 @@ import VenueManagerModal from "../../Modals/venueManager.jsx";
 import TabsComp from "./tabs";
 import ProfileCard from "./profileCard";
 import SettingsCard from "./settingsCard";
+import UpdateAvatar from "../../Modals/updateAvatar";
 
 /**
  * The Profile component displays user information, profile settings, and related tabs.
@@ -19,8 +20,14 @@ const Profile = () => {
   const { _count, bookings } = data || {};
   const { venues, bookings: trips } = _count || {};
 
-  const { handleManagerModal, handleCloseManagerModal, showManagerModal } =
-    useModal();
+  const {
+    handleManagerModal,
+    handleCloseManagerModal,
+    showManagerModal,
+    showUpdateAvatar,
+    handleCloseUpdateAvatar,
+    handleOpenUpdateAvatar,
+  } = useModal();
 
   return (
     <s.PageWrapper>
@@ -28,7 +35,11 @@ const Profile = () => {
       {isError ? <h1>Error occured</h1> : ""}
       <s.ProfileWrapper>
         <ProfileCard data={data} trips={trips} venues={venues} />
-        <SettingsCard data={data} handleManagerModal={handleManagerModal} />
+        <SettingsCard
+          data={data}
+          handleManagerModal={handleManagerModal}
+          handleOpenUpdateAvatar={handleOpenUpdateAvatar}
+        />
       </s.ProfileWrapper>
       <TabsComp
         data={data}
@@ -42,6 +53,10 @@ const Profile = () => {
       <VenueManagerModal
         showManagerModal={showManagerModal}
         handleCloseManagerModal={handleCloseManagerModal}
+      />
+      <UpdateAvatar
+        showUpdateAvatar={showUpdateAvatar}
+        handleCloseUpdateAvatar={handleCloseUpdateAvatar}
       />
     </s.PageWrapper>
   );
