@@ -5,15 +5,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 /**
  * Table of Contents:
  * ------------------
- *  1. Wrappers / Containers: (Line 47 - 115)
+ *  1. Wrappers / Containers:
  *    1a. PageWrapper -
  *    1b. ProfileWrapper -
  *    1c. UserWrapper -
  *    1d. SettingsWrapper -
  *    1e. VenueContainer -
+ *    1f. ReservationWrapper -
  *
  * ------------------
- *  2. User Styling / Profile Settings Card: (Line 118 - 177)
+ *  2. User Styling / Profile Settings Card:
  *    2a. SettingsCard -
  *    2b. ManagerTitle -
  *    2c. UserDetails -
@@ -21,7 +22,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
  *    2e. Avatar -
  *
  * ------------------
- *  3. Venue Styling: (Line 180 - 377)
+ *  3. Venue Styling:
  *    3a. HoverOverlay -
  *    3b. VenueImage -
  *    3c. Card -
@@ -36,12 +37,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
  *    3l. Details -
  *
  * ------------------
- *  4. Buttons & Utils: (Line 380 - 443)
+ *  4. Buttons & Utils:
  *    4a. SettingsButton -
  *    4b. Button -
  *    4c. BookingCounts -
  *    4d. QuitButton -
  * ------------------
+ * 5. Table styling:
+ *    5a. Table -
+ *    5b. HoveredTR -
+ *    5c. ReservationsHeading
  */
 
 // 1. Wrappers / Containers:
@@ -64,6 +69,7 @@ export const ProfileWrapper = styled.section`
 
   @media (max-width: 871px) {
     width: calc(100%);
+    align-items: center;
   }
 `;
 
@@ -102,6 +108,8 @@ export const DataWrapper = styled.section`
 
   @media (max-width: 871px) {
     width: calc(100% - 10px);
+    align-self: center;
+}
   }
 `;
 
@@ -112,6 +120,11 @@ export const VenuesContainer = styled.section`
   overflow-y: scroll;
   padding-bottom: 1rem;
   max-height: 100vh;
+`;
+
+export const ReservationWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 //----------------------------------------------
@@ -376,6 +389,16 @@ export const Details = styled.div`
   align-items: baseline;
 `;
 
+export const DetailsReservation = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: auto;
+  margin-left: 0.33rem;
+  margin-right: 0.33rem;
+  align-items: baseline;
+`;
+
 //---------------------------------------
 // 4. Buttons & Utils:
 export const SettingsButton = styled.button`
@@ -440,4 +463,61 @@ export const QuitButton = styled.button`
   @media screen and (max-width: 368px) {
     padding: 0.33rem 1rem;
   }
+`;
+
+//---------------------------------------------
+//  5. Table Styling:
+export const Table = styled.table`
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  @media (max-width: 767px) {
+    display: flex;
+    width: 100%;
+
+    th,
+    td {
+      width: 100%;
+      display: block;
+    }
+
+    tbody {
+      display: block;
+    }
+
+    thead {
+    }
+  }
+`;
+
+export const HoveredTR = styled.tr`
+  transition: background 0.3s ease-in-out;
+
+  &:nth-child(even) {
+    background-color: #f7f7f7;
+  }
+  &:hover {
+    background-color: #c82867;
+    color: white;
+    cursor: pointer;
+  }
+`;
+
+export const ReservationHeading = styled.h4`
+  font-weight: bolder;
+  cursor: pointer;
+`;
+
+export const ReservationNumber = styled.p`
+  display: flex;
+  font-style: italic;
 `;

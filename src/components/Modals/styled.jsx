@@ -39,6 +39,7 @@ export const Input = styled.input`
 `;
 
 export const ErrorMessage = styled.p`
+  color: red;
   max-width: 18rem;
   margin-top: -1rem;
 `;
@@ -80,6 +81,7 @@ export const ErrorContainer = styled.div`
   flex-direction: column;
   text-align: center;
   margin-top: 1rem;
+  color: red;
 `;
 
 export const StyledFontAwesomeIcon = styled(FontAwesomeIcon)`
