@@ -19,7 +19,6 @@ import { BASE_URL } from "../../../constants";
 const UpdateAvatar = ({ showUpdateAvatar, handleCloseUpdateAvatar }) => {
   const { isLoading, isError, sendFormData, isSuccess } = useAuthForm();
   const { name } = useParams();
-  console.log(name);
   const UPDATE_AVATAR = `${BASE_URL}profiles/${name}/media`;
 
   const {

@@ -20,7 +20,25 @@ const setup = () => {
     `https://nf-api.onrender.com/api/v1/holidaze/profiles/${name}/bookings?sort=dateFrom&sortOrder=asc&_venue=true`
   );
 
-  return { data, isLoading, isError, bookingData, loading, error };
+  const {
+    data: venueData,
+    isLoading: venueLoading,
+    isError: venueError,
+  } = useGetProfile(
+    `https://nf-api.onrender.com/api/v1/holidaze/profiles/${name}/venues?_bookings=true`
+  );
+
+  return {
+    data,
+    isLoading,
+    isError,
+    bookingData,
+    loading,
+    error,
+    venueData,
+    venueError,
+    venueLoading,
+  };
 };
 
 export default setup;

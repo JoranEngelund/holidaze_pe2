@@ -16,7 +16,17 @@ import UpdateAvatar from "../../Modals/updateAvatar";
  * updates, and provides tabs for navigating related content.
  */
 const Profile = () => {
-  const { data, isLoading, isError, bookingData, loading, error } = setup();
+  const {
+    data,
+    isLoading,
+    isError,
+    bookingData,
+    loading,
+    error,
+    venueData,
+    venueError,
+    venueLoading,
+  } = setup();
   const { _count, bookings } = data || {};
   const { venues, bookings: trips } = _count || {};
 
@@ -43,12 +53,15 @@ const Profile = () => {
       </s.ProfileWrapper>
       <TabsComp
         data={data}
+        venueData={venueData}
         _count={_count}
         bookings={bookings}
         venues={venues}
         bookingData={bookingData}
         loading={loading}
         error={error}
+        venueError={venueError}
+        venueLoading={venueLoading}
       />
       <VenueManagerModal
         showManagerModal={showManagerModal}

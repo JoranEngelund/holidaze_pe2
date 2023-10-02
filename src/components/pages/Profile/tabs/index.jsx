@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Loader } from "../../../Loader";
+import useStorage from "../../../../hooks/useStorage";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import * as s from "../styled";
 import "react-tabs/style/react-tabs.css";
@@ -15,27 +16,43 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 /**
- * The TabsComp component displays tabs for user bookings and related information.
- * @param {Object} props - The component's input props.
- * @param {Object} props.data - User data.
- * @param {Object[]} props.bookings - User bookings data.
- * @param {Object[]} props.venues - User venue data.
- * @param {Object[]} props.bookingData - User booking details.
- * @param {boolean} props.loading - Indicates if data is being loaded.
- * @param {boolean} props.error - Indicates if an error occurred during data fetching.
- * @returns {JSX.Element} A rendered TabsComp component.
- * @description This component manages the display of tabs for user bookings, venue hosting,
- * and reservation information. It allows users to view and interact with their bookings
- * and related data.
+ * Functional component for displaying user's venues, trips, and reservations in tabs.
+ *
+ * @component
+ * @param {Object} props - The properties passed to the component.
+ * @param {Object[]} props.data - User data containing venue manager details.
+ * @param {Object[]} props.bookings - User's upcoming bookings data.
+ * @param {Object[]} props.venues - User's hosted venues data.
+ * @param {Object[]} props.bookingData - All user's booking data.
+ * @param {boolean} props.loading - Indicates whether data is still loading.
+ * @param {boolean} props.error - Indicates whether an error occurred while loading data.
+ * @param {Object[]} props.venueData - User's hosted venue data.
+ * @param {boolean} props.venueLoader - Indicates whether venue data is still loading.
+ * @param {boolean} props.venueError - Indicates whether an error occurred while loading venue data.
+ * @returns {JSX.Element} - Returns JSX elements to display user's venues, trips, and reservations in tabs.
  */
-const TabsComp = ({ data, bookings, venues, bookingData, loading, error }) => {
+const TabsComp = ({
+  data,
+  bookings,
+  venues,
+  bookingData,
+  loading,
+  error,
+  venueData,
+  venueLoader,
+  venueError,
+}) => {
   const [displayCount, setDisplayCount] = useState(2);
   const maxDisplayCount = bookingData?.length;
   const currentDate = new Date();
-
+  console.log(bookingData);
   const upcomingBookings = bookingData.filter(
     (booking) => new Date(booking.dateTo) > currentDate
   );
+
+  const { load } = useStorage();
+  const user = load("user");
+  const userName = user ? user.name : "";
 
   const displayedBookings = upcomingBookings.slice(0, displayCount);
 
@@ -51,6 +68,19 @@ const TabsComp = ({ data, bookings, venues, bookingData, loading, error }) => {
     setDisplayCount(Math.max(displayCount - 2, 2));
   };
 
+  const [displayVenueCount, setDisplayVenueCount] = useState(2);
+  const maxDisplayVenueCount = venueData?.length;
+
+  const displayedVenues = venueData?.slice(0, displayVenueCount) || []; // Handle null/undefined case
+
+  const handleShowMoreVenues = () => {
+    setDisplayVenueCount(Math.min(displayVenueCount + 2, maxDisplayVenueCount));
+  };
+
+  const handleShowLessVenues = () => {
+    setDisplayVenueCount(Math.max(displayVenueCount - 2, 2));
+  };
+
   return (
     <s.DataWrapper>
       {data?.venueManager ? (
@@ -62,8 +92,108 @@ const TabsComp = ({ data, bookings, venues, bookingData, loading, error }) => {
           </TabList>
           <TabPanel>
             <h2>Your Venues</h2>
-            {venues?.length <= 0 ? (
-              ""
+            {venueData?.length >= 0 ? (
+              <>
+                <p>
+                  Displaying {displayVenueCount} of your {venueData?.length}{" "}
+                  hosted venues
+                </p>
+                {displayVenueCount === (venueData?.length || 0) ? (
+                  ""
+                ) : (
+                  <s.Button onClick={handleShowMoreVenues}>
+                    Show more <FontAwesomeIcon icon={faPlus} />
+                  </s.Button>
+                )}
+                {displayVenueCount <= 2 ? (
+                  ""
+                ) : (
+                  <s.Button onClick={handleShowLessVenues}>
+                    Show less <FontAwesomeIcon icon={faMinus} />
+                  </s.Button>
+                )}
+                <hr />
+                <s.VenuesContainer>
+                  {venueLoader ? <Loader /> : ""}
+                  {venueError ? <h2>Error Occurred</h2> : ""}
+                  {displayedVenues.map(
+                    (hosted, index) =>
+                      hosted && (
+                        <s.Card
+                          to={`/profile/${userName}/venue-settings/${hosted.id}`}
+                          key={`${hosted.id}-${index}`}
+                          id={hosted.id}
+                        >
+                          {hosted?.media?.length <= 0 ? (
+                            <s.VenueImage
+                              src={venueImagePlaceholder}
+                              alt="Placeholder image"
+                              title="No image was found"
+                            />
+                          ) : (
+                            <s.VenueImage
+                              src={hosted?.media[0]}
+                              alt={hosted?.name}
+                              title={hosted?.name}
+                            />
+                          )}
+                          <s.HoverOverlay className="hoverOverlay">
+                            <s.ViewText>EDIT</s.ViewText>
+                          </s.HoverOverlay>
+                          <s.TitleRating>
+                            <s.VenueTitle>{hosted?.name}</s.VenueTitle>
+                            <s.Rating>
+                              <FontAwesomeIcon icon={faStar} />
+                              {hosted?.rating}{" "}
+                            </s.Rating>
+                          </s.TitleRating>
+                          <div>
+                            <s.VenueLocation>
+                              {hosted?.location.city}
+                            </s.VenueLocation>
+                          </div>
+                          <s.Details>
+                            <s.VenuePrice>{hosted?.price} ,-</s.VenuePrice>
+                            <s.Meta>
+                              {hosted?.meta.wifi ? (
+                                <FontAwesomeIcon
+                                  icon={faWifi}
+                                  title="WiFi Included"
+                                />
+                              ) : (
+                                ""
+                              )}
+                              {hosted?.meta.parking ? (
+                                <FontAwesomeIcon
+                                  icon={faCar}
+                                  title="Parking Included"
+                                />
+                              ) : (
+                                ""
+                              )}
+                              {hosted?.meta.breakfast ? (
+                                <FontAwesomeIcon
+                                  icon={faMugSaucer}
+                                  title="Breakfast Included"
+                                />
+                              ) : (
+                                ""
+                              )}
+                              {hosted?.meta.pets ? (
+                                <FontAwesomeIcon
+                                  icon={faPaw}
+                                  title="Pets Allowed"
+                                />
+                              ) : (
+                                ""
+                              )}
+                            </s.Meta>
+                          </s.Details>
+                        </s.Card>
+                      )
+                  )}
+                </s.VenuesContainer>
+              </>
             ) : (
               <>
                 <p>You're not hosting any venues yet</p>
@@ -147,43 +277,16 @@ const TabsComp = ({ data, bookings, venues, bookingData, loading, error }) => {
                           {trip?.venue.location.city}
                         </s.VenueLocation>
                       </div>
-                      <s.Details>
-                        <s.VenuePrice>{trip?.venue.price} ,-</s.VenuePrice>
-                        <s.Meta>
-                          {trip?.venue.meta.wifi ? (
-                            <FontAwesomeIcon
-                              icon={faWifi}
-                              title="WiFi Included"
-                            />
-                          ) : (
-                            ""
-                          )}
-                          {trip?.venue.meta.parking ? (
-                            <FontAwesomeIcon
-                              icon={faCar}
-                              title="Parking Included"
-                            />
-                          ) : (
-                            ""
-                          )}
-                          {trip?.venue.meta.breakfast ? (
-                            <FontAwesomeIcon
-                              icon={faMugSaucer}
-                              title="Breakfast Included"
-                            />
-                          ) : (
-                            ""
-                          )}
-                          {trip?.venue.meta.pets ? (
-                            <FontAwesomeIcon
-                              icon={faPaw}
-                              title="Pets Allowed"
-                            />
-                          ) : (
-                            ""
-                          )}
-                        </s.Meta>
-                      </s.Details>
+                      <s.DetailsReservation>
+                        <s.VenuePrice>
+                          Check-In:{" "}
+                          {new Date(trip.dateFrom).toLocaleDateString()}
+                        </s.VenuePrice>
+                        <s.VenuePrice>
+                          Check-Out:{" "}
+                          {new Date(trip.dateTo).toLocaleDateString()}
+                        </s.VenuePrice>
+                      </s.DetailsReservation>
                     </s.Card>
                   ))}
                 </s.VenuesContainer>
@@ -192,7 +295,77 @@ const TabsComp = ({ data, bookings, venues, bookingData, loading, error }) => {
           </TabPanel>
           <TabPanel>
             <h2>Reservations</h2>
-            <hr />
+            {venueData?.length > 0 ? (
+              venueData.map((venue, venueIndex) => (
+                <s.ReservationWrapper key={venue.id}>
+                  <hr />
+                  <s.ReservationHeading
+                    onClick={() =>
+                      window.location.replace(`/venue/${venue.id}`)
+                    }
+                  >
+                    {venue.name}{" "}
+                  </s.ReservationHeading>
+                  {venue.bookings.length > 0 ? (
+                    <s.ReservationNumber>
+                      {venue.bookings.length} reservations
+                    </s.ReservationNumber>
+                  ) : (
+                    ""
+                  )}
+                  {venue.bookings.length > 0 ? (
+                    <s.Table>
+                      <thead>
+                        <tr>
+                          <th>Created</th>
+                          <th>Date From</th>
+                          <th>Date To</th>
+                          <th>Guests</th>
+                          <th>Updated</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {venue.bookings.map((reservation, reservationIndex) => (
+                          <s.HoveredTR
+                            title={venue.name}
+                            key={reservation.id}
+                            onClick={() =>
+                              window.location.replace(`/venue/${venue.id}`)
+                            }
+                          >
+                            <td>
+                              {new Date(
+                                reservation.created
+                              ).toLocaleDateString()}
+                            </td>
+                            <td>
+                              {new Date(
+                                reservation.dateFrom
+                              ).toLocaleDateString()}
+                            </td>
+                            <td>
+                              {new Date(
+                                reservation.dateTo
+                              ).toLocaleDateString()}
+                            </td>
+                            <td>{reservation.guests}</td>
+                            <td>
+                              {new Date(
+                                reservation.updated
+                              ).toLocaleDateString()}
+                            </td>
+                          </s.HoveredTR>
+                        ))}
+                      </tbody>
+                    </s.Table>
+                  ) : (
+                    <p>No reservations for this venue yet.</p>
+                  )}
+                </s.ReservationWrapper>
+              ))
+            ) : (
+              <p>No venues available.</p>
+            )}
           </TabPanel>
         </Tabs>
       ) : (
