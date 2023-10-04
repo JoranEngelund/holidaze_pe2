@@ -13,13 +13,11 @@ export const Banner = styled.section`
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
 
   @media (max-width: 800px) {
-    background: fixed 53% 26%
-      url(/src/assets/images/pexels-jess-loiterton-4321802.jpg);
+    background: fixed 53% 26% url(${heroBanner});
   }
 
   @media (max-width: 530px) {
-    background: fixed 59% 0%
-      url(/src/assets/images/pexels-jess-loiterton-4321802.jpg);
+    background: fixed 59% 0% url(${heroBanner});
   }
 `;
 
