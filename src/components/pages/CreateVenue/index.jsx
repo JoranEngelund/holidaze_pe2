@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import useStorage from "../../../hooks/useStorage";
 import useModal from "../../../hooks/useModal";
 import CreateVenueSuccess from "../../Modals/createVenueSuccess.jsx";
+import CheckAuth from "../../../auth/unauth";
 
 /**
  * CreateVenue component for managing venue settings.
@@ -64,6 +65,7 @@ const CreateVenue = () => {
 
   return (
     <s.PageWrapper>
+      <CheckAuth />
       <s.StyledLinks to={`/profile/${userName}`}>
         <FontAwesomeIcon icon={faArrowLeft} />
         Profile

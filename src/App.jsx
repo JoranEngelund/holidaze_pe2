@@ -15,12 +15,10 @@ const App = () => {
         <Route path="*" element={<h1>Page not found</h1>} />
         <Route path="/venue/:id" element={<Venue />} />
         <Route path="/profile/:name" element={<Profile />} />
-        <Route path="/profile/:name/reservations" element />
         <Route
           path="/profile/:name/venue-manager-settings"
           element={<CreateVenue />}
         />
-        <Route path="/profile/settings" element />
         <Route
           path="/profile/:name/venue-settings/:id"
           element={<EditVenue />}

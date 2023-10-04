@@ -90,7 +90,7 @@ const Navigation = ({ handleShow }) => {
             ) : (
               <Nav.Link
                 onClick={handleShow}
-                className="navLink ps-2"
+                className="navLink"
                 style={{ color: isActive("") ? "black" : "" }}
               >
                 Login
