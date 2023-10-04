@@ -1,3 +1,4 @@
+import Search from "../Search";
 import * as s from "./styled";
 
 /**
@@ -10,13 +11,7 @@ const IntroBanner = () => {
   return (
     <s.Banner>
       <s.Slogan>Where every stay becomes a Holidaze</s.Slogan>
-      <form>
-        <s.SearchField
-          type="search"
-          name="search"
-          placeholder="Find Your Destination"
-        />
-      </form>
+      <Search />
     </s.Banner>
   );
 };

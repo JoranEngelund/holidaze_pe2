@@ -147,7 +147,7 @@ export const StyledLink = styled(Link)`
   border: none;
   color: white;
   border-radius: 3px;
-  padding: 0.33rem 8rem;
+  padding: 0.33rem 3rem;
   background: #c82867;
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
   transition: background 0.3s ease-in-out;

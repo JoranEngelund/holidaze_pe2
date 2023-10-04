@@ -11,6 +11,7 @@ import {
   faMugSaucer,
 } from "@fortawesome/free-solid-svg-icons";
 import { Loader } from "../../../Loader";
+import { Button } from "../../../Modals/styled";
 
 /**
  * A component that displays a list of venues, including their details and images.
@@ -27,6 +28,19 @@ const AllVenues = () => {
       {isLoading ? <Loader /> : ""}
 
       <s.VenueHeading>Ready to Explore?</s.VenueHeading>
+      {isError ? (
+        <s.ErrorContainer>
+          <p>
+            Oups! There seems to be some technical issues! Try refreshing the
+            page or try again later
+          </p>
+          <div>
+            <Button onClick={() => window.location.reload()}>Refresh</Button>
+          </div>
+        </s.ErrorContainer>
+      ) : (
+        ""
+      )}
       {data?.map((listing) => (
         <s.Card to={`/venue/${listing.id}`} key={listing.id} id={listing.id}>
           {listing.media.length <= 0 ? (

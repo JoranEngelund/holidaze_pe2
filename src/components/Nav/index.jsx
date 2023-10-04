@@ -47,7 +47,11 @@ const Navigation = ({ handleShow }) => {
             {token ? (
               user && venueManager !== undefined ? (
                 venueManager ? (
-                  <NavDropdown title={user.name} id="basic-nav-dropdown">
+                  <NavDropdown
+                    className="me-2"
+                    title={user.name}
+                    id="basic-nav-dropdown"
+                  >
                     <NavDropdown.Item href={`/profile/${userName}`}>
                       Profile
                     </NavDropdown.Item>
