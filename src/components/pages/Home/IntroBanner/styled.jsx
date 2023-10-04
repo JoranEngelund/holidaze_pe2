@@ -3,7 +3,7 @@ import heroBanner from "../../../../assets/images/pexels-jess-loiterton-4321802.
 
 export const Banner = styled.section`
   background: fixed 100% 26% url(${heroBanner});
-  min-height: 18rem;
+  min-height: 110vh;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -11,6 +11,16 @@ export const Banner = styled.section`
   align-items: center;
   background-size: cover;
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%);
+
+  @media (max-width: 800px) {
+    background: fixed 53% 26%
+      url(/src/assets/images/pexels-jess-loiterton-4321802.jpg);
+  }
+
+  @media (max-width: 530px) {
+    background: fixed 59% 0%
+      url(/src/assets/images/pexels-jess-loiterton-4321802.jpg);
+  }
 `;
 
 export const Slogan = styled.h1`

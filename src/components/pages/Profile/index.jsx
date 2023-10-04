@@ -7,6 +7,7 @@ import TabsComp from "./tabs";
 import ProfileCard from "./profileCard";
 import SettingsCard from "./settingsCard";
 import UpdateAvatar from "../../Modals/updateAvatar";
+import CheckAuth from "../../../auth/unauth";
 
 /**
  * The Profile component displays user information, profile settings, and related tabs.
@@ -29,7 +30,6 @@ const Profile = () => {
   } = setup();
   const { _count, bookings } = data || {};
   const { venues, bookings: trips } = _count || {};
-
   const {
     handleManagerModal,
     handleCloseManagerModal,
@@ -41,6 +41,7 @@ const Profile = () => {
 
   return (
     <s.PageWrapper>
+      <CheckAuth />
       {isLoading ? <Loader /> : ""}
       {isError ? <h1>Error occured</h1> : ""}
       <s.ProfileWrapper>

@@ -19,6 +19,7 @@ import { useParams } from "react-router-dom";
 import UpdateSuccess from "../../Modals/updateSuccess.jsx";
 import DeleteAlert from "../../Modals/delete/deleteAlert";
 import DeleteSuccess from "../../Modals/delete/deleteSuccess";
+import CheckAuth from "../../../auth/unauth";
 
 /**
  * Represents a function component for editing or deleting a venue.
@@ -77,6 +78,7 @@ const CreateVenue = () => {
 
   return (
     <s.PageWrapper>
+      <CheckAuth />
       <s.StyledLinks to={`/profile/${userName}`}>
         <FontAwesomeIcon icon={faArrowLeft} />
         Profile
