@@ -1,6 +1,7 @@
 import { avatarPlaceholder } from "../../../../placeholders/imageplaceholders";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import * as s from "../styled";
+import { ErrorWrapper } from "../../CreateVenue/styled";
 
 /**
  * Displays user profile information in a card.
@@ -14,9 +15,18 @@ import * as s from "../styled";
  * @description This component displays user profile information, including
  * their name, avatar, and role (venue manager or guest), along with trip and venue counts.
  */
-const ProfileCard = ({ data, trips, venues }) => {
+const ProfileCard = ({ isError, data, trips, venues }) => {
   return (
     <s.UserWrapper>
+      {isError ? (
+        <ErrorWrapper>
+          <p>Oops! There was an issue processing your booking request.</p>
+          <p>Please refresh and try again, or try at a later time</p>
+          <s.StyledLink onClick={window.location.reload}>Refresh</s.StyledLink>
+        </ErrorWrapper>
+      ) : (
+        ""
+      )}
       <s.UserDetails>
         {data?.avatar <= 0 ? (
           <s.Avatar

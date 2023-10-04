@@ -43,9 +43,14 @@ const Profile = () => {
     <s.PageWrapper>
       <CheckAuth />
       {isLoading ? <Loader /> : ""}
-      {isError ? <h1>Error occured</h1> : ""}
+      {isError ? src / components / pages / Venue / booking / index.jsx : ""}
       <s.ProfileWrapper>
-        <ProfileCard data={data} trips={trips} venues={venues} />
+        <ProfileCard
+          isError={isError}
+          data={data}
+          trips={trips}
+          venues={venues}
+        />
         <SettingsCard
           data={data}
           handleManagerModal={handleManagerModal}
