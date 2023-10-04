@@ -198,3 +198,10 @@ export const Details = styled.div`
   margin-right: 0.33rem;
   align-items: baseline;
 `;
+
+export const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 1rem;
+  max-width: 23rem;
+`;

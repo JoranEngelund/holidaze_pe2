@@ -98,7 +98,7 @@ const Booking = ({ handleShow, handleBookingSuccess }) => {
                   : "/fallback-path"
               }
             >
-              Update Venue Details
+              Update Venue
             </s.StyledLink>
           ) : (
             <s.BookingForm autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
