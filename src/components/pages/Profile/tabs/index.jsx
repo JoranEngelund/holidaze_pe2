@@ -45,7 +45,6 @@ const TabsComp = ({
   const [displayCount, setDisplayCount] = useState(2);
   const maxDisplayCount = bookingData?.length;
   const currentDate = new Date();
-  console.log(bookingData);
   const upcomingBookings = bookingData.filter(
     (booking) => new Date(booking.dateTo) > currentDate
   );
@@ -71,7 +70,13 @@ const TabsComp = ({
   const [displayVenueCount, setDisplayVenueCount] = useState(2);
   const maxDisplayVenueCount = venueData?.length;
 
-  const displayedVenues = venueData?.slice(0, displayVenueCount) || []; // Handle null/undefined case
+  useEffect(() => {
+    if (maxDisplayVenueCount) {
+      setDisplayVenueCount(Math.min(displayVenueCount, maxDisplayVenueCount));
+    }
+  }, [maxDisplayVenueCount]);
+
+  const displayedVenues = venueData?.slice(0, displayVenueCount) || [];
 
   const handleShowMoreVenues = () => {
     setDisplayVenueCount(Math.min(displayVenueCount + 2, maxDisplayVenueCount));
@@ -80,7 +85,6 @@ const TabsComp = ({
   const handleShowLessVenues = () => {
     setDisplayVenueCount(Math.max(displayVenueCount - 2, 2));
   };
-
   return (
     <s.DataWrapper>
       {data?.venueManager ? (
@@ -92,7 +96,21 @@ const TabsComp = ({
           </TabList>
           <TabPanel>
             <h2>Your Venues</h2>
-            {venueData?.length >= 0 ? (
+            {!(venueData?.length > 0) ? (
+              <>
+                <p>You're not hosting any venues yet</p>
+                <hr />
+                <s.Button
+                  onClick={() =>
+                    window.location.replace(
+                      `${data?.name}/venue-manager-settings`
+                    )
+                  }
+                >
+                  Start hosting
+                </s.Button>
+              </>
+            ) : (
               <>
                 <p>
                   Displaying {displayVenueCount} of your {venueData?.length}{" "}
@@ -193,20 +211,6 @@ const TabsComp = ({
                       )
                   )}
                 </s.VenuesContainer>
-              </>
-            ) : (
-              <>
-                <p>You're not hosting any venues yet</p>
-                <hr />
-                <s.Button
-                  onClick={() =>
-                    window.location.replace(
-                      `${data?.name}/venue-manager-settings`
-                    )
-                  }
-                >
-                  Start hosting
-                </s.Button>
               </>
             )}
           </TabPanel>

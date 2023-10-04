@@ -17,7 +17,6 @@ import { FormLoader } from "../../../Loader";
 export const Search = () => {
   const { data, isError } = useApi(allVenues_URL);
 
-  console.log(data);
   const [searchQuery, setSearchQuery] = useState("");
 
   const inputQuery = (e) => {
@@ -28,7 +27,6 @@ export const Search = () => {
   const filteredQuery = data.filter((venues) => {
     const venueName = venues.location.country?.trim().toLowerCase();
     const searchQueryToLowerCase = searchQuery.toLowerCase();
-    console.log(venueName);
 
     return venueName?.includes(searchQueryToLowerCase) && searchQuery !== "";
   });
