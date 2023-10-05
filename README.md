@@ -1,6 +1,6 @@
 # Holidaze
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/35a01c11-fca8-4152-9f0d-1db735cfbe71/deploy-status)](https://app.netlify.com/sites/evolve-ecommerce/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c4684df0-b4ef-4ac1-9479-f1d5d50d3e96/deploy-status)](https://app.netlify.com/sites/holidazes/deploys)
 
 [Holidaze - LIVE SITE](https://holidazes.netlify.app/)
 
@@ -9,7 +9,7 @@
 
 ## Description
 
-Evolve is an eCommerce store project developed with React, showcasing look-ahead searchbar, fully functional cart-system, various pages like specific product page, checkout page, checkout-success page, contact page with form etc. The eCommerce store utilizes an external API for data
+Holidaze is a booking accommodation application tailored for registered customers to explore, book venues. With its inbuilt fully functioning booking system, the customers are able to browse calendars displaying available and unavailable dates for check-in and check-out, to be able to reserve a venue at a given date-range. As a guest / customer, you are able to register as a venue manager, which opens up the ability to host your own venues with Holidazes inbuilt venue manager settings feature. Being able to list name, price, max guests, media gallery, location, what your venue offers, and more to fully describe to your potential customers what they may expect when they book your hosted venue. As a venue manager, you are able to edit already hosted venues, if the need is there, or all together, delete an already hosted venue. A customer may, if the wish is there, to apply to become a venue manager, or if you already are a venue manager and wants to step back, its possible with just a few click to stop hosting venues. As a venue manager, you're able to view reservations made on your hosted venues, in your profile tab, aswell as you can view your already hosted venues or your upcoming / ongoing trips you've made. 
 
 ## Main Features:
 - Universal responsive UX / UI
