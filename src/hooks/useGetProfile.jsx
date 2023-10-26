@@ -37,7 +37,7 @@ const useGetProfile = (url) => {
         const response = await fetch(url, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json; UTF-8",
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         });
